@@ -1,0 +1,24 @@
+set nocompatible
+set number
+set relativenumber
+set cursorline
+set laststatus=2
+set backspace=indent,eol,start
+set smarttab
+set ruler
+set noro
+syntax on
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'leafgarland/typescript-vim'
+
+call vundle#end()
+filetype plugin indent on
+
+cmap w!! w !sudo tee > /dev/null %
+
