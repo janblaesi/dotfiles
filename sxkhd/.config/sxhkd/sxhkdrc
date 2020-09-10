@@ -108,6 +108,9 @@ super + {Left,Down,Up,Right}
 # XF86 Keys
 #
 
+super + shift + m
+	bspc desktop -f ^11
+
 XF86MonBrightnessUp
 	light -A 5
 XF86MonBrightnessDown
