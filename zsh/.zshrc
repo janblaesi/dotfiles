@@ -71,6 +71,8 @@ alias ll='ls -lh'
 alias la='ls -alh'
 alias l='ls -alh'
 
+alias grep='grep --color=auto'
+
 alias e='sudo emerge'
 alias eu='sudo emerge -uDN --with-bdeps=y @world'
 alias ec='sudo emerge -c'
