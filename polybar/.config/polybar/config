@@ -27,8 +27,45 @@ primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
+[bar/qbit-multidisplay-left]
+monitor = ${env:MONITOR:DP-1-3}
+width = 100%
+height = 24
+fixed-center = false
+background = ${colors.background}
+foreground = ${colors.foreground}
+line-size = 3
+line-color = #f00
+module-margin-left = 1
+module-margin-right = 2
+font-0 = "Lato:style=Regular:pixelsize=10"
+font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=10;1"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;1"
+font-3 = "Font Awesome 5 Brands:pixelsize=10;1"
+modules-left = bspwm
+modules-center = 
+modules-right = 
+
+[bar/qbit-multidisplay-right]
+monitor = ${env:MONITOR:DP-1-1}
+width = 100%
+height = 24
+fixed-center = false
+background = ${colors.background}
+foreground = ${colors.foreground}
+line-size = 3
+line-color = #f00
+module-margin-left = 1
+module-margin-right = 2
+font-0 = "Lato:style=Regular:pixelsize=10"
+font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=10;1"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;1"
+font-3 = "Font Awesome 5 Brands:pixelsize=10;1"
+modules-left = bspwm
+modules-center = 
+modules-right =
+
 [bar/mybar]
-;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 24
 ;offset-x = 1%
@@ -117,7 +154,7 @@ interval = 3.0
 
 format-connected =   <label-connected>
 format-connected-underline = #9f78e1
-label-connected = %essid%
+label-connected = %essid%: %local_ip%
 
 format-disconnected =
 
@@ -181,7 +218,7 @@ animation-discharging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
-thermal-zone = 0
+thermal-zone = 1
 warn-temperature = 60
 
 format =   <label>
