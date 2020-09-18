@@ -1,6 +1,6 @@
 #! /bin/sh
 
-bspc monitor -d I II III IV V VI VII VIII IX X T
+bspc monitor -d 1 2 3 4 5 6 7 8 9 10 Mail
 
 xscreensaver -no-splash &
 ~/.config/polybar/launch.sh
@@ -10,7 +10,7 @@ nextcloud --background &
 nm-applet &
 ~/.fehbg
 
-bspc config border_width         2
+bspc config border_width         1
 bspc config window_gap          12
 
 bspc config split_ratio          0.52
