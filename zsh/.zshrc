@@ -37,21 +37,31 @@ unsetopt flowcontrol
 setopt auto_menu
 setopt complete_in_word
 setopt always_to_end
-setopt autocd
 
 # case insensitive completion
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
-# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
 # Complete . and .. special directories
 zstyle ':completion:' special-dirs true
 
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+
+# disable named-directories autocompletion
+zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
 
 # partial completion suggestions
 zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
+
+autoload -U +X bashcompinit
+bashcompinit
+
+###############################################################################
+# misc opts
+
+setopt autocd
 
 ###############################################################################
 # env vars
@@ -65,6 +75,10 @@ sshi()
 {
   /usr/bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
+scpi()
+{
+  /usr/bin/scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+}
 
 alias ls='ls --color=auto'
 alias ll='ls -lh'
@@ -73,11 +87,15 @@ alias l='ls -alh'
 
 alias grep='grep --color=auto'
 
+# gentoo-specifics
 alias e='sudo emerge'
 alias eu='sudo emerge -uDN --with-bdeps=y @world'
 alias ec='sudo emerge -c'
-alias es='sudo emaint sync --all'
+alias es="sudo sh -c 'emerge-webrsync; emaint sync -r dotnet; eix-update'"
 alias etu='sudo etc-update'
+alias equ='equery use'
+alias eqy='equery keywords'
+alias gli='sudo genlop -i'
 
 ###############################################################################
 # ssh agent load
@@ -154,11 +172,4 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
-
-###############################################################################
-# node version manager
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
