@@ -22,7 +22,8 @@ setopt hist_verify		# dont execute immediately upon hist expansion
 # prompt
 
 autoload -U promptinit
-promptinit; prompt gentoo
+promptinit
+prompt gentoo
 
 . /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 
@@ -55,8 +56,7 @@ zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-dir
 zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
 
-autoload -U +X bashcompinit
-bashcompinit
+autoload -U +X bashcompinit && bashcompinit
 
 ###############################################################################
 # misc opts
@@ -71,6 +71,10 @@ export EDITOR='vim'
 ###############################################################################
 # functions and aliases
 
+# insecure ssh functions, we only want to use those if connecting to
+# some development host, where host key checking is not useful, 
+# never use this to connect to something over the internet as it 
+# basically defeats ssh security
 sshi()
 {
   /usr/bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
@@ -88,14 +92,17 @@ alias l='ls -alh'
 alias grep='grep --color=auto'
 
 # gentoo-specifics
-alias e='sudo emerge'
-alias eu='sudo emerge -uDN --with-bdeps=y @world'
-alias ec='sudo emerge -c'
-alias es="sudo sh -c 'emerge-webrsync; emaint sync -r dotnet; eix-update'"
-alias etu='sudo etc-update'
-alias equ='equery use'
-alias eqy='equery keywords'
-alias gli='sudo genlop -i'
+# we only enable these aliases if a gentoo system is detected
+if [ -f /etc/gentoo-release ]; then
+    alias e='sudo emerge'
+    alias eu='sudo emerge -uDN --with-bdeps=y @world'
+    alias ec='sudo emerge -c'
+    alias es="sudo sh -c 'emerge-webrsync; emaint sync -r dotnet; eix-update'"
+    alias etu='sudo etc-update'
+    alias equ='equery use'
+    alias eqy='equery keywords'
+    alias gli='sudo genlop -i'
+fi
 
 ###############################################################################
 # ssh agent load
