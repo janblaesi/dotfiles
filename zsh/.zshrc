@@ -23,9 +23,11 @@ setopt hist_verify		# dont execute immediately upon hist expansion
 
 autoload -U promptinit
 promptinit
-prompt gentoo
+prompt adam2
 
-. /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+if [ -f /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh ]; then
+  . /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+fi
 
 ###############################################################################
 # completion
@@ -84,7 +86,12 @@ scpi()
   /usr/bin/scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 
-alias ls='ls --color=auto'
+if [ "$( uname -s )" = "Linux" ]; then
+  alias ls='ls --color=auto'
+elif [ "$( uname -s )" = "Darwin" ]; then
+  alias ls='ls -G'
+fi
+
 alias ll='ls -lh'
 alias la='ls -alh'
 alias l='ls -alh'
