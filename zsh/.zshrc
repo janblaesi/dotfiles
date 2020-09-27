@@ -101,14 +101,18 @@ alias grep='grep --color=auto'
 # gentoo-specifics
 # we only enable these aliases if a gentoo system is detected
 if [ -f /etc/gentoo-release ]; then
-    alias e='sudo emerge'
-    alias eu='sudo emerge -uDN --with-bdeps=y @world'
-    alias ec='sudo emerge -c'
-    alias es="sudo sh -c 'emerge-webrsync; emaint sync -r dotnet; eix-update'"
-    alias etu='sudo etc-update'
+    PREFIX=""
+    if [ "$UID" != "0" ]; then
+        PREFIX="sudo "
+    fi
+    alias e="${PREFIX}emerge"
+    alias eu="${PREFIX}emerge -uDN --with-bdeps=y @world"
+    alias ec="${PREFIX}emerge -c"
+    alias es="${PREFIX}sh -c 'emerge-webrsync; eix-update'"
+    alias etu="${PREFIX}etc-update"
     alias equ='equery use'
     alias eqy='equery keywords'
-    alias gli='sudo genlop -i'
+    alias gli="${PREFIX}genlop -i"
 fi
 
 ###############################################################################
