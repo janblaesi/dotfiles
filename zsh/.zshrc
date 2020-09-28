@@ -41,6 +41,9 @@ setopt auto_menu
 setopt complete_in_word
 setopt always_to_end
 
+bindkey -M menuselect '^o' accept-and-infer-next-history
+zstyle ':completion:*:*:*:*:*' menu select
+
 # case insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
@@ -57,6 +60,8 @@ zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-dir
 # partial completion suggestions
 zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
+
+zstyle '*' single-ignored show
 
 autoload -U +X bashcompinit && bashcompinit
 
