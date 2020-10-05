@@ -41,7 +41,6 @@ setopt auto_menu
 setopt complete_in_word
 setopt always_to_end
 
-bindkey -M menuselect '^o' accept-and-infer-next-history
 zstyle ':completion:*:*:*:*:*' menu select
 
 # case insensitive completion
@@ -68,7 +67,9 @@ autoload -U +X bashcompinit && bashcompinit
 ###############################################################################
 # misc opts
 
-setopt autocd
+setopt auto_cd
+setopt multios
+setopt prompt_subst
 
 ###############################################################################
 # env vars
@@ -102,6 +103,7 @@ alias la='ls -alh'
 alias l='ls -alh'
 
 alias grep='grep --color=auto'
+alias diff='diff --color=auto'
 
 # gentoo-specifics
 # we only enable these aliases if a gentoo system is detected
