@@ -122,7 +122,7 @@ if [ -f /etc/gentoo-release ]; then
     alias ec="${PREFIX}emerge -c"
     alias es="${PREFIX}sh -c 'emerge-webrsync; eix-update'"
     alias etu="${PREFIX}etc-update"
-    alias equ='equery use'
+    alias equ='equery uses'
     alias eqy='equery keywords'
     alias gli="${PREFIX}genlop -i"
 fi
