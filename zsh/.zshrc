@@ -92,6 +92,11 @@ scpi()
   /usr/bin/scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 
+ssht()
+{
+  /usr/bin/ssh -t $@ "tmux new -A -n jbl_ssl"
+}
+
 if [ "$( uname -s )" = "Linux" ]; then
   alias ls='ls --color=auto'
 elif [ "$( uname -s )" = "Darwin" ]; then
