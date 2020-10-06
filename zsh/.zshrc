@@ -26,7 +26,7 @@ promptinit
 
 # extracted from /usr/share/zsh/5.8/functions/Prompts/prompt_gentoo_setup
 # 2020-10-06, 19:05, jbl
-# ** snip here **
+# ** snip **
 if [ "$USER" = "root" ]; then
 	local base_prompt="%B%F{red}%m%k "
 else
@@ -37,7 +37,7 @@ local path_prompt="%B%F{blue}%1~"
 typeset -g PS1="$base_prompt$path_prompt %# $post_prompt"
 typeset -g PS2="$base_prompt$path_prompt %_> $post_prompt"
 typeset -g PS3="$base_prompt$path_prompt ?# $post_prompt"
-# ** snip here **
+# ** snip **
 
 if [ -f /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh ]; then
   . /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
@@ -123,6 +123,10 @@ alias l='ls -alh'
 
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
+
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
 
 # gentoo-specifics
 # we only enable these aliases if a gentoo system is detected
