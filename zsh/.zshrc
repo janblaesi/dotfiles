@@ -23,7 +23,21 @@ setopt hist_verify		# dont execute immediately upon hist expansion
 
 autoload -U promptinit
 promptinit
-prompt adam2
+
+# extracted from /usr/share/zsh/5.8/functions/Prompts/prompt_gentoo_setup
+# 2020-10-06, 19:05, jbl
+# ** snip here **
+if [ "$USER" = "root" ]; then
+	local base_prompt="%B%F{red}%m%k "
+else
+	local base_prompt="%B%F{green}%n@%m%k "
+fi
+local post_prompt="%b%f%k"
+local path_prompt="%B%F{blue}%1~"
+typeset -g PS1="$base_prompt$path_prompt %# $post_prompt"
+typeset -g PS2="$base_prompt$path_prompt %_> $post_prompt"
+typeset -g PS3="$base_prompt$path_prompt ?# $post_prompt"
+# ** snip here **
 
 if [ -f /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh ]; then
   . /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
