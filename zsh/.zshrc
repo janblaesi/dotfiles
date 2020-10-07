@@ -99,17 +99,24 @@ export EDITOR='vim'
 # basically defeats ssh security
 sshi()
 {
-  /usr/bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+  /usr/bin/ssh -F ~/.ssh/config -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 scpi()
 {
-  /usr/bin/scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+  /usr/bin/scp -F ~/.ssh/config -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 
 ssht()
 {
-  /usr/bin/ssh -t $@ "tmux new -A -n jbl_ssl"
+  /usr/bin/ssh -F ~/.ssh/config -t $@ "tmux new -A -n jbl_ssl"
 }
+
+ssh()
+{
+  /usr/bin/ssh -F ~/.ssh/config $@
+}
+
+export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
 if [ "$( uname -s )" = "Linux" ]; then
   alias ls='ls --color=auto'
