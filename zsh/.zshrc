@@ -173,6 +173,13 @@ else
 fi
 
 ###############################################################################
+# load nvm if available
+
+if [ -f ~/.nvm/nvm.sh ]; then
+  source ~/.nvm/nvm.sh
+fi
+
+###############################################################################
 # keybindings
 
 autoload -U up-line-or-beginning-search
