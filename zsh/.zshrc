@@ -111,6 +111,18 @@ ssht()
   /usr/bin/ssh -F ~/.ssh/config -t $@ "tmux new -A -n jbl_ssl"
 }
 
+# ssh functions for easier asta access
+ssha()
+{
+  /usr/bin/ssh -F ~/.ssh/config -J dw-extern blaesi@$1.asta.kit.edu
+}
+sshar()
+{
+  /usr/bin/ssh -F ~/.ssh/config -J dw-extern root@$1.asta.kit.edu
+}
+
+# macos needs this foo to stop sending its locale env vars to
+# other machines...
 ssh()
 {
   /usr/bin/ssh -F ~/.ssh/config $@
