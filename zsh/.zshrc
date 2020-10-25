@@ -40,7 +40,7 @@ typeset -g PS3="$base_prompt$path_prompt ?# $post_prompt"
 # ** snip **
 
 if [ -f /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh ]; then
-  . /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+ 	. /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 fi
 
 ###############################################################################
@@ -79,6 +79,74 @@ zstyle '*' single-ignored show
 autoload -U +X bashcompinit && bashcompinit
 
 ###############################################################################
+# term title
+
+function term_set_title()
+{
+	emulate -L zsh
+	local term_is_known=0
+	local term_is_multiplexer=0
+
+	if [[ ${TERM} == rxvt-unicode* || ${TERM} == xterm* || ! -z ${TMUX} ]]; then
+		term_is_known=1
+	fi
+	if [[ ! -z ${TMUX} ]]; then
+		term_is_multiplexer=1
+	fi
+
+	if [[ ${term_is_known} -ne 1 ]]; then return; fi
+
+	printf '\033]0;%s\007' ${1//[^[:print:]]/}
+
+	if [[ ${term_is_multiplexer} -eq 1 ]]; then
+		printf '\033k%s\033\\' ${1//[^[:print:]]/}
+	fi
+}
+
+function term_title_get_cmd()
+{
+	emulate -L zsh
+	local job_text
+	local job_key
+	typeset -g RETURN_CMD
+	RETURN_CMD=${1}
+
+	case ${1} in
+		%*) job_key=$1 ;;
+		fg) job_key=%+ ;;
+		fg*) job_key=${(Q)${(z)1}[2,-1]} ;;
+		*) job_key='' ;;
+	esac
+	if [[ -z ${job_key} ]]; then return; fi
+
+	job_text=${jobtexts[$job_key]} 2>/dev/null
+	if [[ -z ${job_text} ]]; then return; fi
+
+	RETURN_CMD=${job_texŧ}
+}
+
+function term_title_precmd()
+{
+	emulate -L zsh
+	local cmd='zsh'
+	local dir='%~'
+	term_set_title ${cmd}:${(%)dir}	
+}
+
+function term_title_preexec()
+{
+	emulate -L zsh
+	term_title_get_cmd ${1}
+	local cmd=${RETURN_CMD}
+	local dir='%~'
+	term_set_title ${cmd}:${(%)dir}
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd term_title_precmd
+add-zsh-hook preexec term_title_preexec
+
+###############################################################################
 # misc opts
 
 setopt auto_cd
@@ -97,35 +165,55 @@ export EDITOR='vim'
 # some development host, where host key checking is not useful, 
 # never use this to connect to something over the internet as it 
 # basically defeats ssh security
-sshi()
+function sshi()
 {
-  /usr/bin/ssh -F ~/.ssh/config -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+	/usr/bin/ssh -F ~/.ssh/config -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
-scpi()
+function scpi()
 {
-  /usr/bin/scp -F ~/.ssh/config -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+	/usr/bin/scp -F ~/.ssh/config -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 
-ssht()
+function ssht()
 {
-  /usr/bin/ssh -F ~/.ssh/config -t $@ "tmux new -A -n jbl_ssl"
+	/usr/bin/ssh -F ~/.ssh/config -t $@ "tmux new -A -n jbl_ssl"
 }
 
 # ssh functions for easier asta access
-ssha()
+function _asta-ssh()
 {
-  /usr/bin/ssh -F ~/.ssh/config -J dw-extern blaesi@$1.asta.kit.edu
+	local user="${1}"
+	local host="${2}"
+
+	local jump=""
+	if [[ -n ${3} ]] then
+		jump="-J ${3}"
+	fi
+
+	/usr/bin/ssh -F ~/.ssh/config ${jump} ${user}@${host}.asta.kit.edu
 }
-sshar()
+function asta-ssh()
 {
-  /usr/bin/ssh -F ~/.ssh/config -J dw-extern root@$1.asta.kit.edu
+	 if [[ -n ${3} ]] then
+		 _asta-ssh "blaesi" "${1}" "${3}"
+	 else
+		 _asta-ssh "blaesi" "${1}"
+	 fi
+}
+function asta-sshr()
+{
+	 if [[ -n ${3} ]] then
+		 _asta-ssh "root" "${1}" "${3}"
+	 else
+		 _asta-ssh "root" "${1}"
+	 fi
 }
 
 # macos needs this foo to stop sending its locale env vars to
 # other machines...
-ssh()
+function ssh()
 {
-  /usr/bin/ssh -F ~/.ssh/config $@
+	/usr/bin/ssh -F ~/.ssh/config $@
 }
 
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
@@ -169,26 +257,28 @@ fi
 
 export SSH_ENV="$HOME/.ssh/agent-environment"
 
-start_ssh_agent()
+function start_ssh_agent()
 {
-  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-  chmod 600 "${SSH_ENV}"
-  . "${SSH_ENV}" > /dev/null
-  /usr/bin/ssh-add
+	/usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+	chmod 600 "${SSH_ENV}"
+	. "${SSH_ENV}" > /dev/null
+	/usr/bin/ssh-add
 }
 
-if [ -f "${SSH_ENV}" ]; then
-  . "${SSH_ENV}" > /dev/null
-  ps ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || start_ssh_agent
-else
-  start_ssh_agent
+if [ ! -n "${SSH_CLIENT}" ] && [ ! -n "${SSH_TTY}" ]; then
+	if [ -f "${SSH_ENV}" ]; then
+	        . "${SSH_ENV}" > /dev/null
+	        ps ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || start_ssh_agent
+	else
+	        start_ssh_agent
+	fi
 fi
 
 ###############################################################################
 # load nvm if available
 
 if [ -f ~/.nvm/nvm.sh ]; then
-  source ~/.nvm/nvm.sh
+	source ~/.nvm/nvm.sh
 fi
 
 ###############################################################################
