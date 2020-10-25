@@ -190,20 +190,21 @@ function _asta-ssh()
 		jump="-J ${3}"
 	fi
 
-	/usr/bin/ssh -F ~/.ssh/config ${jump} ${user}@${host}.asta.kit.edu
+	echo "/usr/bin/ssh -F ~/.ssh/config ${jump} ${user}@${host}"
+	/usr/bin/ssh -F ~/.ssh/config ${jump} ${user}@${host}
 }
 function asta-ssh()
 {
-	 if [[ -n ${3} ]] then
-		 _asta-ssh "blaesi" "${1}" "${3}"
+	 if [[ -n ${2} ]] then
+		 _asta-ssh "blaesi" "${1}" "${2}"
 	 else
 		 _asta-ssh "blaesi" "${1}"
 	 fi
 }
 function asta-sshr()
 {
-	 if [[ -n ${3} ]] then
-		 _asta-ssh "root" "${1}" "${3}"
+	 if [[ -n ${2} ]] then
+		 _asta-ssh "root" "${1}" "${2}"
 	 else
 		 _asta-ssh "root" "${1}"
 	 fi
