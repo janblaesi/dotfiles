@@ -28,12 +28,12 @@ promptinit
 # 2020-10-06, 19:05, jbl
 # ** snip **
 if [ "$USER" = "root" ]; then
-	local base_prompt="%B%F{red}%m%k "
+	base_prompt="%B%F{red}%m%k "
 else
-	local base_prompt="%B%F{green}%n@%m%k "
+	base_prompt="%B%F{green}%n@%m%k "
 fi
-local post_prompt="%b%f%k"
-local path_prompt="%B%F{blue}%1~"
+post_prompt="%b%f%k"
+path_prompt="%B%F{blue}%1~"
 typeset -g PS1="$base_prompt$path_prompt %# $post_prompt"
 typeset -g PS2="$base_prompt$path_prompt %_> $post_prompt"
 typeset -g PS3="$base_prompt$path_prompt ?# $post_prompt"
@@ -41,6 +41,18 @@ typeset -g PS3="$base_prompt$path_prompt ?# $post_prompt"
 
 if [ -f /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh ]; then
  	. /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+fi
+
+###############################################################################
+# vcs status
+
+if [ -f "$( which git )" ] && [ -f "~/.git-prompt.sh" ]; then
+	export GIT_PS1_SHOWDIRTYSTATE="yes"
+	export GIT_PS1_SHOWSTASHSTATE="yes"
+	export GIT_PS1_SHOWUNTRACKEDFILES="yes"
+	export GIT_PS1_SHOWCOLORHINTS="yes"
+	source ~/.git-prompt.sh
+	RPROMPT='$(__git_ps1 "%s")'
 fi
 
 ###############################################################################
@@ -186,7 +198,7 @@ function _asta-ssh()
 	local host="${2}"
 
 	local jump=""
-	if [[ -n ${3} ]] then
+	if [ -n ${3} ]; then
 		jump="-J ${3}"
 	fi
 
@@ -195,7 +207,7 @@ function _asta-ssh()
 }
 function asta-ssh()
 {
-	 if [[ -n ${2} ]] then
+	 if [ -n ${2} ]; then
 		 _asta-ssh "blaesi" "${1}" "${2}"
 	 else
 		 _asta-ssh "blaesi" "${1}"
@@ -203,7 +215,7 @@ function asta-ssh()
 }
 function asta-sshr()
 {
-	 if [[ -n ${2} ]] then
+	 if [ -n ${2} ]; then
 		 _asta-ssh "root" "${1}" "${2}"
 	 else
 		 _asta-ssh "root" "${1}"
@@ -332,8 +344,8 @@ bindkey '^R' history-incremental-search-backward
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	autoload -Uz add-zle-hook-widget
-	function zle_application_mode_start { echoti smkx }
-	function zle_application_mode_stop { echoti rmkx }
+	function zle_application_mode_start { echoti smkx; }
+	function zle_application_mode_stop { echoti rmkx; }
 	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
