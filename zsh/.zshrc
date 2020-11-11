@@ -188,7 +188,7 @@ function scpi()
 
 function ssht()
 {
-	/usr/bin/ssh -F ~/.ssh/config -t $@ "tmux new -A -n jbl_ssl"
+	/usr/bin/ssh -F ~/.ssh/config -t $@ "tmux new -A -s jbl_ssl"
 }
 
 # ssh functions for easier asta access
