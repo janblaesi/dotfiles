@@ -46,7 +46,7 @@ fi
 ###############################################################################
 # vcs status
 
-if [ -f "$( which git )" ] && [ -f "~/.git-prompt.sh" ]; then
+if [ -f "$( which git )" ] && [ -f ~/.git-prompt.sh ]; then
 	export GIT_PS1_SHOWDIRTYSTATE="yes"
 	export GIT_PS1_SHOWSTASHSTATE="yes"
 	export GIT_PS1_SHOWUNTRACKEDFILES="yes"
