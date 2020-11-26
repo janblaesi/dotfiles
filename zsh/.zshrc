@@ -169,6 +169,7 @@ setopt prompt_subst
 # env vars
 
 export EDITOR='vim'
+export PATH="${PATH}:${HOME}/.local/bin"
 
 ###############################################################################
 # functions and aliases
@@ -278,7 +279,7 @@ function start_ssh_agent()
 	/usr/bin/ssh-add
 }
 
-if [ ! -n "${SSH_CLIENT}" ] && [ ! -n "${SSH_TTY}" ]; then
+if [ ! -n "${SSH_AUTH_SOCK}" ] && [ ! -n "${SSH_CLIENT}" ] && [ ! -n "${SSH_TTY}" ]; then
 	if [ -f "${SSH_ENV}" ]; then
 	        . "${SSH_ENV}" > /dev/null
 	        ps ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || start_ssh_agent
