@@ -199,7 +199,7 @@ function _asta-ssh()
 	local host="${2}"
 
 	local jump=""
-	if [ -n ${3} ]; then
+	if [ "${3}" != "" ]; then
 		jump="-J ${3}"
 	fi
 
@@ -208,7 +208,7 @@ function _asta-ssh()
 }
 function asta-ssh()
 {
-	 if [ -n ${2} ]; then
+	 if [ "${2}" != "" ]; then
 		 _asta-ssh "blaesi" "${1}" "${2}"
 	 else
 		 _asta-ssh "blaesi" "${1}"
@@ -216,7 +216,7 @@ function asta-ssh()
 }
 function asta-sshr()
 {
-	 if [ -n ${2} ]; then
+	 if [ "${2}" != "" ]; then
 		 _asta-ssh "root" "${1}" "${2}"
 	 else
 		 _asta-ssh "root" "${1}"
