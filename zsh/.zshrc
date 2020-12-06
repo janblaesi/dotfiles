@@ -24,20 +24,12 @@ setopt hist_verify		# dont execute immediately upon hist expansion
 autoload -U promptinit
 promptinit
 
-# extracted from /usr/share/zsh/5.8/functions/Prompts/prompt_gentoo_setup
-# 2020-10-06, 19:05, jbl
-# ** snip **
-if [ "$USER" = "root" ]; then
-	base_prompt="%B%F{red}%m%k "
-else
-	base_prompt="%B%F{green}%n@%m%k "
-fi
-post_prompt="%b%f%k"
-path_prompt="%B%F{blue}%1~"
-typeset -g PS1="$base_prompt$path_prompt %# $post_prompt"
-typeset -g PS2="$base_prompt$path_prompt %_> $post_prompt"
-typeset -g PS3="$base_prompt$path_prompt ?# $post_prompt"
-# ** snip **
+MY_PROMPT="%B%F{cyan}%n%F{white}@%F{yellow}%m%b%F{white} %F{green}%B%~%b%F{white}"
+MY_PROMPT="[%B%F{cyan}%m%F{white}] %b%F{yellow}%~%F{white}"
+
+typeset -g PS1="$MY_PROMPT %# %b%f%k"
+typeset -g PS2="$MY_PROMPT %_> %b%f%k"
+typeset -g PS3="$MY_PROMPT ?# %b%f%k"
 
 if [ -f /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh ]; then
  	. /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
@@ -256,6 +248,14 @@ if [ -f /etc/gentoo-release ]; then
     if [ "$UID" != "0" ]; then
         PREFIX="sudo "
     fi
+
+	function esr()
+	{
+		for repo in $( eselect repository list -i | awk '{ print $2 }' | awk '!/^gentoo/' | awk '!/^repositories/' ); do
+			sudo emaint sync -r "${repo}"
+		done
+	}
+
     alias e="${PREFIX}emerge"
     alias eu="${PREFIX}emerge -uDN --with-bdeps=y @world"
     alias ec="${PREFIX}emerge -c"
@@ -349,5 +349,9 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	function zle_application_mode_stop { echoti rmkx; }
 	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+fi
+
+if [ "$( hostname )" = "intelburner" ]; then
+	export VDPAU_DRIVER=radeonsi
 fi
 
