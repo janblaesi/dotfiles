@@ -24,8 +24,7 @@ setopt hist_verify		# dont execute immediately upon hist expansion
 autoload -U promptinit
 promptinit
 
-MY_PROMPT="%B%F{cyan}%n%F{white}@%F{yellow}%m%b%F{white} %F{green}%B%~%b%F{white}"
-MY_PROMPT="[%B%F{cyan}%m%F{white}] %b%F{yellow}%~%F{white}"
+MY_PROMPT="[%B%F{green}%n%F{white}@%F{cyan}%m%F{white}%b] %F{yellow}%1~%F{white}"
 
 typeset -g PS1="$MY_PROMPT %# %b%f%k"
 typeset -g PS2="$MY_PROMPT %_> %b%f%k"
@@ -161,7 +160,7 @@ setopt prompt_subst
 # env vars
 
 export EDITOR='vim'
-export PATH="${PATH}:${HOME}/.local/bin"
+export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.cargo/bin"
 
 ###############################################################################
 # functions and aliases
@@ -181,7 +180,7 @@ function scpi()
 
 function ssht()
 {
-	/usr/bin/ssh -F ~/.ssh/config -t $@ "tmux new -A -s jbl_ssl"
+	/usr/bin/ssh -F ~/.ssh/config -t $@ "tmux new -A -s jbl_ssh"
 }
 
 # ssh functions for easier asta access
