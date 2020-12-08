@@ -171,16 +171,16 @@ export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.cargo/bin"
 # basically defeats ssh security
 function sshi()
 {
-	/usr/bin/ssh -F ~/.ssh/config -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+	/usr/bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 function scpi()
 {
-	/usr/bin/scp -F ~/.ssh/config -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+	/usr/bin/scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 
 function ssht()
 {
-	/usr/bin/ssh -F ~/.ssh/config -t $@ "tmux new -A -s jbl_ssh"
+	/usr/bin/ssh -t $@ "tmux new -A -s jbl_ssh"
 }
 
 # ssh functions for easier asta access
@@ -194,8 +194,8 @@ function _asta-ssh()
 		jump="-J ${3}"
 	fi
 
-	echo "/usr/bin/ssh -F ~/.ssh/config ${jump} ${user}@${host}"
-	/usr/bin/ssh -F ~/.ssh/config ${jump} ${user}@${host}
+	echo "/usr/bin/ssh ${jump} ${user}@${host}"
+	/usr/bin/ssh ${jump} ${user}@${host}
 }
 function asta-ssh()
 {
@@ -214,20 +214,9 @@ function asta-sshr()
 	 fi
 }
 
-# macos needs this foo to stop sending its locale env vars to
-# other machines...
-function ssh()
-{
-	/usr/bin/ssh -F ~/.ssh/config $@
-}
-
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
-if [ "$( uname -s )" = "Linux" ]; then
-  alias ls='ls --color=auto'
-elif [ "$( uname -s )" = "Darwin" ]; then
-  alias ls='ls -G'
-fi
+alias ls='ls --color=auto'
 
 alias ll='ls -lh'
 alias la='ls -alh'
