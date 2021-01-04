@@ -237,17 +237,46 @@ if [ -f /etc/gentoo-release ]; then
         PREFIX="sudo "
     fi
 
-	function esr()
-	{
-		for repo in $( eselect repository list -i | awk '{ print $2 }' | awk '!/^gentoo/' | awk '!/^repositories/' ); do
-			sudo emaint sync -r "${repo}"
-		done
-	}
+    function eselect-repo-sync()
+    {
+        # check for existence of eselect repository module
+        if ! eselect repository > /dev/null 2>&1; then
+            echo "eselect repository module is not installed. skipping..."
+            return
+        fi
+
+        for REPO in $( eselect repository list -i | awk '$2 !~ /^(gentoo|repositories:)$/ { print $2 }' ); do
+            if [ "${UID}" != "0" ]; then
+                sudo emaint sync -r "${REPO}"
+            else
+                emaint sync -r "${REPO}"
+            fi
+        done
+    }
+
+    function es()
+    {
+        if [ "${UID}" != "0" ]; then
+            sudo emerge-webrsync
+            eselect-repo-sync
+        else
+            emerge-webrsync
+            eselect-repo-sync
+        fi
+
+        # only update eix cache if eix is installed
+        if which eix > /dev/null; then
+            if [ "${UID}" != "0" ]; then
+                sudo eix-update
+            else
+                eix-update
+            fi
+        fi
+    }
 
     alias e="${PREFIX}emerge"
     alias eu="${PREFIX}emerge -uDN --with-bdeps=y @world"
     alias ec="${PREFIX}emerge -c"
-    alias es="${PREFIX}sh -c 'emerge-webrsync; eix-update'"
     alias etu="${PREFIX}etc-update"
     alias equ='equery uses'
     alias eqy='equery keywords'
