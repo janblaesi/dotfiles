@@ -77,6 +77,8 @@ zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-dir
 zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
 
+zstyle ':completion:*' rehash true
+
 zstyle '*' single-ignored show
 
 autoload -U +X bashcompinit && bashcompinit
