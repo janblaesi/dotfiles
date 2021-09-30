@@ -24,7 +24,7 @@ setopt hist_verify		# dont execute immediately upon hist expansion
 autoload -U promptinit
 promptinit
 
-MY_PROMPT="[%B%F{green}%n%F{white}@%F{cyan}%m%F{white}%b] %F{yellow}%1~%F{white}"
+MY_PROMPT="%F{white}[%B%F{green}%n%F{white}@%F{cyan}%m%F{white}%b] %F{yellow}%1~%F{white}"
 
 typeset -g PS1="$MY_PROMPT %# %b%f%k"
 typeset -g PS2="$MY_PROMPT %_> %b%f%k"
