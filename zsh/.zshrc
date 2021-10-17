@@ -8,6 +8,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
+DISABLE_AUTO_UPDATE=true
 plugins=(systemd git cp colorize ssh-agent nvm golang)
 
 source $ZSH/oh-my-zsh.sh
