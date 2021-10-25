@@ -9,11 +9,17 @@ fi
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 DISABLE_AUTO_UPDATE=true
-plugins=(systemd git cp colorize ssh-agent nvm golang)
+plugins=(systemd git cp colorize ssh-agent nvm golang iterm2 brew )
 
 source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
+export PATH="${PATH}:${HOME}/Library/Python/3.8/bin"
+
+function ssht()
+{
+	/usr/bin/ssh -t $@ "tmux new -A -s jbl_ssh"
+}
 
 # insecure ssh functions, we only want to use those if connecting to
 # some development host, where host key checking is not useful, 
