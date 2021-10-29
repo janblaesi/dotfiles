@@ -24,13 +24,27 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
 
+
+# macOS likes to SendEnv LC_*...
+# Linux clients get fucked up by that, so we disable it by using our local config
+SSH=/usr/bin/ssh
+SSH_OPTS=
+if [ "$( uname )" = "Darwin" ]; then
+	SSH_OPTS=(-F ${HOME}/.ssh/config)
+fi
+
+function ssh()
+{
+	$SSH $SSH_OPTS $@
+}
+
 function tmux-ssh()
 {
-	/usr/bin/ssh -t $@ "tmux new -A -s jbl_ssh"
+	$SSH $SSH_OPTS -t $@ "tmux new -A -s jbl_ssh"
 }
 function asta-ssh()
 {
-	/usr/bin/ssh -J asta $@
+	$SSH $SSH_OPTS -J asta $@
 }
 
 # insecure ssh functions, we only want to use those if connecting to
@@ -39,11 +53,11 @@ function asta-ssh()
 # basically defeats ssh security
 function sshi()
 {
-	/usr/bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+	$SSH $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 function scpi()
 {
-	/usr/bin/scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+	$SSH $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
