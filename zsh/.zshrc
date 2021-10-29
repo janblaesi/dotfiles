@@ -9,16 +9,29 @@ fi
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 DISABLE_AUTO_UPDATE=true
-plugins=(systemd git cp colorize ssh-agent nvm golang iterm2 brew )
+plugins=(
+	git
+	cp 
+	colorize
+	ssh-agent
+	iterm2
+	brew 
+	docker
+	zsh-autosuggestions
+)
 
 source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
 export PATH="${PATH}:${HOME}/Library/Python/3.8/bin"
 
-function ssht()
+function tmux-ssh()
 {
 	/usr/bin/ssh -t $@ "tmux new -A -s jbl_ssh"
+}
+function asta-ssh()
+{
+	/usr/bin/ssh -J asta $@
 }
 
 # insecure ssh functions, we only want to use those if connecting to
@@ -36,3 +49,5 @@ function scpi()
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+. "$HOME/.zshenv"
