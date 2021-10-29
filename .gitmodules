@@ -4,7 +4,6 @@
 [submodule "zsh-themes/.oh-my-zsh/custom/themes/powerlevel10k"]
 	path = zsh-themes/.oh-my-zsh/custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
-
 [submodule "zsh-themes/.oh-my-zsh/plugins/zsh-autosuggestions"]
 	path = zsh-themes/.oh-my-zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
