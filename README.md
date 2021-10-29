@@ -2,8 +2,9 @@
 
 This repository contains my dotfiles/configuration for the following services/applications:
 
-* OpenSSH (config File)
-* ZSH (.zshrc)
+* OpenSSH
+* ZSH with Oh-my-zsh
+* Vim
 
 It also contains the following, not maintained configurations:
 
