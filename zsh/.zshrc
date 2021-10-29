@@ -23,7 +23,6 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
-export PATH="${PATH}:${HOME}/Library/Python/3.8/bin"
 
 function tmux-ssh()
 {
@@ -50,4 +49,8 @@ function scpi()
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-. "$HOME/.zshenv"
+# Machine-specific specialities
+if [ -f "${HOME}/.zshenv" ]; then
+	. "$HOME/.zshenv"
+fi
+
