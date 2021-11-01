@@ -28,6 +28,7 @@ export EDITOR='vim'
 # macOS likes to SendEnv LC_*...
 # Linux clients get fucked up by that, so we disable it by using our local config
 SSH=/usr/bin/ssh
+SCP=/usr/bin/scp
 SSH_OPTS=
 if [ "$( uname )" = "Darwin" ]; then
 	SSH_OPTS=(-F ${HOME}/.ssh/config)
@@ -57,7 +58,7 @@ function sshi()
 }
 function scpi()
 {
-	$SSH $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+	$SCP $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
