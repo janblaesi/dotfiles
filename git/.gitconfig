@@ -1,0 +1,7 @@
+[user]
+	name = Jan Blaesi
+	email = jan@blaesi.com
+[init]
+	defaultBranch = master
+[pull]
+	rebase = true
