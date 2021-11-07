@@ -61,6 +61,11 @@ function scpi()
 	$SCP $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 
+function tmpfolder()
+{
+	cd $(mktemp -d)
+}
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
