@@ -13,12 +13,17 @@ plugins=(
 	git
 	cp 
 	colorize
-	ssh-agent
 	iterm2
 	brew 
 	docker
 	zsh-autosuggestions
 )
+
+if [ "$( uname )" != "Darwin" ]; then
+	plugins+=(
+		ssh-agent
+	)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
