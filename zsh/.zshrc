@@ -25,6 +25,18 @@ if [ "$( uname )" != "Darwin" ]; then
 	)
 fi
 
+if [ -d "${HOME}/.nvm" ]; then
+	plugins+=(
+		nvm
+	)
+fi
+
+if [ -d "${HOME}/.rbenv" ]; then
+	plugins+=(
+		rbenv
+	)
+fi
+
 source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
