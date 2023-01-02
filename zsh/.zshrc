@@ -17,6 +17,7 @@ plugins=(
 	brew 
 	docker
 	zsh-autosuggestions
+	fzf
 )
 
 if [ "$( uname )" != "Darwin" ]; then
@@ -63,6 +64,10 @@ function tmux-ssh()
 function asta-ssh()
 {
 	$SSH $SSH_OPTS -J asta $@
+}
+function tmux-asta-ssh()
+{
+	$SSH $SSH_OPTS -J asta -t $@ "tmux new -A -s jbl_ssh"
 }
 
 # insecure ssh functions, we only want to use those if connecting to
