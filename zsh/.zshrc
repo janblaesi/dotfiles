@@ -20,12 +20,6 @@ plugins=(
 	fzf
 )
 
-if [ "$( uname )" != "Darwin" ]; then
-	plugins+=(
-		ssh-agent
-	)
-fi
-
 if [ -d "${HOME}/.nvm" ]; then
 	plugins+=(
 		nvm
