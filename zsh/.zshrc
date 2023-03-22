@@ -9,6 +9,8 @@ fi
 
 #ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH_THEME="gallifrey"
+HISTSIZE=10000000
+SAVEHIST=10000000
 DISABLE_AUTO_UPDATE=true
 plugins=(
 	git
