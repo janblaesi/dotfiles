@@ -7,7 +7,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+#ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="gallifrey"
 DISABLE_AUTO_UPDATE=true
 plugins=(
 	git
@@ -36,6 +37,7 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
 
+alias ip='ip -color=auto'
 
 # macOS likes to SendEnv LC_*...
 # Linux clients get fucked up by that, so we disable it by using our local config
@@ -50,7 +52,6 @@ function ssh()
 {
 	$SSH $SSH_OPTS $@
 }
-
 function tmux-ssh()
 {
 	$SSH $SSH_OPTS -t $@ "tmux new -A -s jbl_ssh"
