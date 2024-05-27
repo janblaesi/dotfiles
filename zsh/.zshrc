@@ -20,6 +20,7 @@ plugins=(
 	docker
 	zsh-autosuggestions
 	fzf
+	golang
 )
 
 if [ -d "${HOME}/.nvm" ]; then
