@@ -41,6 +41,21 @@ export EDITOR='vim'
 
 alias ip='ip -color=auto'
 
+# If exa is installed, use it instead of ls
+# https://the.exa.website/
+if which exa >/dev/null; then
+	alias ls='exa --color=auto --git'
+	alias ll='ls -l'
+	alias la='ls -la'
+fi
+
+# If batcat is installed, use it instead of cat
+# https://github.com/sharkdp/bat/
+if which batcat >/dev/null; then
+	export BAT_STYLE="auto"
+	alias cat='batcat'
+fi
+
 # macOS likes to SendEnv LC_*...
 # Linux clients get fucked up by that, so we disable it by using our local config
 SSH=/usr/bin/ssh
@@ -58,14 +73,6 @@ function tmux-ssh()
 {
 	$SSH $SSH_OPTS -t $@ "tmux new -A -s jbl_ssh"
 }
-function asta-ssh()
-{
-	$SSH $SSH_OPTS -J asta $@
-}
-function tmux-asta-ssh()
-{
-	$SSH $SSH_OPTS -J asta -t $@ "tmux new -A -s jbl_ssh"
-}
 
 # insecure ssh functions, we only want to use those if connecting to
 # some development host, where host key checking is not useful, 
@@ -78,11 +85,6 @@ function sshi()
 function scpi()
 {
 	$SCP $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
-}
-
-function tmpfolder()
-{
-	cd $(mktemp -d)
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
