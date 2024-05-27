@@ -10,8 +10,5 @@ This repository contains my dotfiles/configuration for the following services/ap
 It also contains the following, not maintained configurations:
 
 * alacritty
-* bspwm
 * sway
-* sxhkd
-* polybar
 
