@@ -41,19 +41,23 @@ export EDITOR='vim'
 
 alias ip='ip -color=auto'
 
-# If exa is installed, use it instead of ls
-# https://the.exa.website/
-if which exa >/dev/null; then
-	alias ls='exa --color=auto --git'
-	alias ll='ls -l'
-	alias la='ls -la'
+# If eza is installed, use it instead of ls
+# https://eza.rocks/
+if which eza >/dev/null; then
+	alias ls='eza --color=auto --git'
+	alias ll='ls -lh'
+	alias la='ls -lah'
+	alias l='ls'
 fi
 
 # If batcat is installed, use it instead of cat
 # https://github.com/sharkdp/bat/
+export BAT_STYLE="auto"
+export BAT_THEME="ansi"
 if which batcat >/dev/null; then
-	export BAT_STYLE="auto"
 	alias cat='batcat'
+elif which bat >/dev/null; then
+	alias cat='bat'
 fi
 
 # macOS likes to SendEnv LC_*...
