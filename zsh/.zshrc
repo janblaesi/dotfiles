@@ -37,7 +37,12 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
-export EDITOR='vim'
+if which nvim >/dev/null; then
+    export EDITOR='nvim'
+    alias vim='nvim'
+else
+    export EDITOR='vim'
+fi
 
 alias ip='ip -color=auto'
 
@@ -46,8 +51,8 @@ alias ip='ip -color=auto'
 if which eza >/dev/null; then
 	alias ls='eza --color=auto --git'
 	alias ll='ls -lh'
-	alias la='ls -lah'
-	alias l='ls'
+	alias la='ls -laah'
+	alias l='ls -lah'
 fi
 
 # If batcat is installed, use it instead of cat
