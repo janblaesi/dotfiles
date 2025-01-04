@@ -67,8 +67,8 @@ fi
 
 # macOS likes to SendEnv LC_*...
 # Linux clients get fucked up by that, so we disable it by using our local config
-SSH=/usr/bin/ssh
-SCP=/usr/bin/scp
+SSH=$( which ssh )
+SCP=$( which scp )
 SSH_OPTS=
 if [ "$( uname )" = "Darwin" ]; then
 	SSH_OPTS=(-F ${HOME}/.ssh/config)
@@ -76,11 +76,11 @@ fi
 
 function ssh()
 {
-	$SSH $SSH_OPTS $@
+    $SSH $SSH_OPTS $@
 }
 function tmux-ssh()
 {
-	$SSH $SSH_OPTS -t $@ "tmux new -A -s jbl_ssh"
+    $SSH $SSH_OPTS -t $@ "tmux new -A -s jbl_ssh"
 }
 
 # insecure ssh functions, we only want to use those if connecting to
@@ -89,12 +89,17 @@ function tmux-ssh()
 # basically defeats ssh security
 function sshi()
 {
-	$SSH $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+    $SSH $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 function scpi()
 {
-	$SCP $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+    $SCP $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
+function sshi-copy-id()
+{
+    ssh-copy-id $SSH_OPTS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+}
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
