@@ -1,13 +1,14 @@
-require("config.lazy")
-
-vim.cmd [[colorscheme tokyonight]]
-
 -- Set leader key to ' '
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Set global options
+-- Load Lazy.nvim
+require("config.lazy")
+require("config.lazy_autoupdate")
 
+vim.cmd [[colorscheme tokyonight]]
+
+-- Set global options
 vim.opt.number = true
 vim.opt.mouse = 'a'
 
