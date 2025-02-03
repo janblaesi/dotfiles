@@ -21,6 +21,7 @@ plugins=(
 	zsh-autosuggestions
 	fzf
 	golang
+        colored-man-pages
 )
 
 if [ -d "${HOME}/.nvm" ]; then
