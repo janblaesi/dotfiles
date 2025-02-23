@@ -69,7 +69,14 @@ fi
 # macOS likes to SendEnv LC_*...
 # Linux clients get fucked up by that, so we disable it by using our local config
 if [ "$( uname )" = "Darwin" ]; then
+    if alias | egrep "^ssh" >/dev/null; then
+        unalias ssh
+    fi
     alias ssh='ssh -F ${HOME}/.ssh/config'
+
+    if alias | egrep "^scp" >/dev/null; then
+        unalias scp
+    fi
     alias scp='scp -F ${HOME}/.ssh/config'
 fi
 
