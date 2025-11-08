@@ -1,0 +1,13 @@
+term = xterm-256color
+
+window-inherit-font-size = false
+font-family = 0xProto Nerd Font Mono
+font-feature = -dlig
+font-size = 16
+font-thicken
+
+#theme = tokyonight_moon
+theme = Ayu Mirage
+cursor-style = bar
+adjust-cell-width = -15%
+
