@@ -10,10 +10,6 @@
 [submodule "vim/.vim/bundle/Vundle.vim"]
 	path = vim/.vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim
-[submodule "alacritty/.config/alacritty/themes"]
-	path = alacritty/.config/alacritty/themes
-	url = https://github.com/alacritty/alacritty-theme
-	branch = master
 [submodule "tmux/.tmux/plugins/tpm"]
 	path = tmux/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
