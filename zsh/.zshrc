@@ -80,6 +80,13 @@ if [ "$( uname )" = "Darwin" ]; then
     alias scp='scp -F ${HOME}/.ssh/config'
 fi
 
+# If an ssh-agent is running, but no keys are registered, try and register them
+if [ ! -z "${SSH_AUTH_SOCK}" ]; then
+    if [ "$( ssh-add -L )" = "The agent has no identities." ]; then
+        ssh-add
+    fi
+fi
+
 function tmux-ssh()
 {
     ssh -t $@ "tmux new -A -s jbl_ssh"
@@ -102,12 +109,11 @@ function sshi-copy-id()
     ssh-copy-id -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Machine-specific specialities
 if [ -f "${HOME}/.zshenv" ]; then
-	. "$HOME/.zshenv"
+    . "$HOME/.zshenv"
 fi
 
