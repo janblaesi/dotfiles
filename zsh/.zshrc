@@ -81,9 +81,14 @@ if [ "$( uname )" = "Darwin" ]; then
 fi
 
 # If an ssh-agent is running, but no keys are registered, try and register them
+# On macOS, we use the keys stored in the keychain of the system
 if [ ! -z "${SSH_AUTH_SOCK}" ]; then
     if [ "$( ssh-add -L )" = "The agent has no identities." ]; then
-        ssh-add
+        if [ "$( uname )" = "Darwin" ]; then
+            ssh-add --apple-load-keychain
+        else
+            ssh-add
+        fi
     fi
 fi
 
