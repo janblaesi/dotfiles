@@ -3,7 +3,7 @@ term = xterm-256color
 window-inherit-font-size = false
 font-family = 0xProto Nerd Font Mono
 font-feature = -dlig
-font-size = 16
+font-size = 14
 font-thicken
 
 #theme = tokyonight_moon
